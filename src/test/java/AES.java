@@ -53,15 +53,11 @@ public class AES {
             AES aes = new AES();
             aes.init();
             String encryptedMessage = aes.encrypt("Hello World!");
-            String encryptedMessage2 = aes.encrypt("Hello World!2");
 
             String decryptedMessage = aes.decrypt(encryptedMessage);
-            String decryptedMessage2 = aes.decrypt(encryptedMessage2);
 
             System.err.println("Encrypted Message : " + encryptedMessage);
             System.err.println("Decrypted Message : " + decryptedMessage);
-            System.out.println("Encrypted 2 Message : " + encryptedMessage2);
-            System.out.println("Decrypted 2 Message : " + decryptedMessage2);
         } catch (Exception ignored) {
         }
     }

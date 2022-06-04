@@ -1,8 +1,8 @@
 package tech.kongolian.PasswordManagerCLI;
 
+import tech.kongolian.PasswordManagerCLI.Encryption.Encoder;
 import tech.kongolian.PasswordManagerCLI.Format.ColourFormat;
 import tech.kongolian.PasswordManagerCLI.lowDB.low;
-
 
 import java.util.Scanner;
 
@@ -14,10 +14,7 @@ import java.util.Scanner;
  */
 
 
-// todo add encryption to the database
-// todo add a way to manage passwords
-// todo add a way to delete passwords
-// todo add some sort of encryption to the passwords
+// todo Make the program loop
 
 
 public class Main {
@@ -27,9 +24,10 @@ public class Main {
     public static ColourFormat cf = new ColourFormat();
 
     /**
-     * the linkedmap that contains all the passwords and usages
+     * the Linked-Map that contains all the passwords and usages
      */
     protected static low pm = new low();
+
 
 
     public static void main(String[] args) {
@@ -38,26 +36,31 @@ public class Main {
         //print a cool logo that says password manager
 
 
-        System.out.println(cf.ANSI_GREEN(cf.ANSI_GREEN("  ____       _      ____    ____   __        __   ___    ____    ____  \n" +
-                " |  _ \\     / \\    / ___|  / ___|  \\ \\      / /  / _ \\  |  _ \\  |  _ \\ \n" +
-                " | |_) |   / _ \\   \\___ \\  \\___ \\   \\ \\ /\\ / /  | | | | | |_) | | | | |\n" +
-                " |  __/   / ___ \\   ___) |  ___) |   \\ V  V /   | |_| | |  _ <  | |_| |\n" +
-                " |_|     /_/   \\_\\ |____/  |____/     \\_/\\_/     \\___/  |_| \\_\\ |____/ \n" +
-                "                                                                       "
-        )));
+
+            System.out.println(cf.ANSI_GREEN(cf.ANSI_GREEN("  ____       _      ____    ____   __        __   ___    ____    ____  \n" +
+                    " |  _ \\     / \\    / ___|  / ___|  \\ \\      / /  / _ \\  |  _ \\  |  _ \\ \n" +
+                    " | |_) |   / _ \\   \\___ \\  \\___ \\   \\ \\ /\\ / /  | | | | | |_) | | | | |\n" +
+                    " |  __/   / ___ \\   ___) |  ___) |   \\ V  V /   | |_| | |  _ <  | |_| |\n" +
+                    " |_|     /_/   \\_\\ |____/  |____/     \\_/\\_/     \\___/  |_| \\_\\ |____/ \n" +
+                    "                                                                       "
+            )));
 
 
-        System.out.println(cf.ANSI_YELLOW("                                                  Generator / Manager "));
-        System.out.println(cf.ANSI_YELLOW("                                                  Made by: Zeeshan\n\n\n"));
+            System.out.println(cf.ANSI_YELLOW("                                                  Generator / Manager "));
+            System.out.println(cf.ANSI_YELLOW("                                                  Made by: Zeeshan\n\n\n"));
 
 
-        System.out.println(cf.ANSI_BLUE("Usage: java -jar PasswordGenerator.jar\n"));
-        System.out.println(cf.ANSI_BLUE("Welcome To the Password Generator / Manager! \nPlease choose an option!"));
+            System.out.println(cf.ANSI_BLUE("Usage: java -jar PasswordGenerator.jar\n"));
+        while (true) {
+            System.out.println(cf.ANSI_BLUE("Welcome To the Password Generator / Manager! \nPlease choose an option!"));
 
-        pm.initializeMap();
+            low.initializeMap();
 
 
-        choiceOptions();
+            choiceOptions();
+            cleanConsole();
+        }
+
 
 
     }
@@ -166,28 +169,34 @@ public class Main {
         //--------------------------------------------------------------------------------------------------
 
 
-        // ask if the user if they like the password, if they do, save it to the file, if not reroll it
-        System.out.println(cf.ANSI_CYAN("Do you want to reroll the password? (y/n)"));
+        // ask if the user is they like the password, if they do, save it to the file, if not re-roll it
+        System.out.println(cf.ANSI_CYAN("Do you want to Re-Roll the password? (y/n)"));
         while (true) {
             String likePassword = scanner.nextLine();
             likePassword = likePassword.toLowerCase();
 
             if (likePassword.equals("n")) {
-                SavePasswords sp = new SavePasswords(Password, usage);
+                String EncPass = Encoder.encode(Password);
+                SavePasswords sp = new SavePasswords(EncPass, usage);
                 sp.savePassword();
 
                 System.out.println(cf.ANSI_GREEN("Your password has been saved! "));
+                System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
+                scanner.nextLine();
                 break;
 
 
             } else if (likePassword.equals("y")) {
                 Password = passwordGenerator.GeneratePassword();
                 System.out.println(cf.ANSI_GREEN("Your new password is: ") + Password);
-                System.out.println(cf.ANSI_CYAN("Do you want to reroll the password? (y/n)"));
+                System.out.println(cf.ANSI_CYAN("Do you want to Re-Roll the password? (y/n)"));
                 if (likePassword.equals("n")) {
-                    SavePasswords sp = new SavePasswords(Password, usage);
+                    String EncPass = Encoder.encode(Password);
+                    SavePasswords sp = new SavePasswords(EncPass, usage);
                     sp.savePassword();
                     System.out.println(cf.ANSI_GREEN("Your password has been saved! "));
+                    System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
+                    scanner.nextLine();
                     break;
                 }
 
@@ -206,12 +215,16 @@ public class Main {
      */
 
     public static void Choice2_ManagePassword() {
-        System.out.println(cf.ANSI_CYAN("Work In Progress!"));
+//        System.out.println(cf.ANSI_CYAN("Work In Progress!"));
+        ManagePasswords mp = new ManagePasswords();
+        cleanConsole();
+        mp.passManager();
+
 
     }
 
     /**
-     * This methods clears the console.
+     * This methods clear the console.
      */
     public static void cleanConsole() {
         for (int i = 0; i < 50; i++) {

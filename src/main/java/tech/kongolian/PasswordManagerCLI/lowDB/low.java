@@ -10,7 +10,7 @@ import java.util.Map;
 public class low {
 
     private static low instance = null;
-    private final JsonHelper jh = new JsonHelper();
+    private static final JsonHelper jh = new JsonHelper();
     /**
      * This class is used to store the data of the low level database.
      * It is a singleton class, which means that it can only hold one instance of the map and all the values that are related.
@@ -19,7 +19,7 @@ public class low {
      * @version 1.0
      * @since 2020-01-01
      */
-    public Map<String, String> passMap = new LinkedHashMap<>();
+    public static Map<String, String> passMap = new LinkedHashMap<>();
 
 
     /**
@@ -41,7 +41,7 @@ public class low {
         return instance;
     }
 
-    public void initializeMap() {
+    public static void initializeMap() {
         // gets data from the passwords.json
         // and put it into the hashmap
 
@@ -92,6 +92,21 @@ public class low {
      */
     public boolean containsKey(String key) {
         return passMap.containsKey(key);
+    }
+
+
+    public static void saveToFile() {
+        // gets data from the passwords.json
+        // and put it into the hashmap
+        String path = "src/main/resources/";
+        try {
+            FileWriter file = new FileWriter(path + "passwords.json");
+            file.write(jh.mapToJson(passMap));
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

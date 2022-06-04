@@ -55,7 +55,6 @@ public class SavePasswords {
         String dataJson = gson.toJson(pm.passMap);
 
 
-        // write the data to the file
         try {
             /*
              * path to resources folder

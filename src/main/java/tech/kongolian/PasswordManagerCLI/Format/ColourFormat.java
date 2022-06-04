@@ -2,6 +2,13 @@ package tech.kongolian.PasswordManagerCLI.Format;
 
 public class ColourFormat {
 
+    /**
+     * This class is used to format the output of the program.
+     * by using the ANSI escape codes.
+     * @author Kongolian
+     * @version 1.0
+     */
+
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
