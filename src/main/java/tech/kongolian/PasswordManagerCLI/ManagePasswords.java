@@ -32,23 +32,15 @@ public class ManagePasswords {
         switch(choice){
             case 1:
                 findPassword();
-                System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
-                scan.nextLine();
                 break;
             case 2:
                 removePassword();
-                System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
-                scan.nextLine();
                 break;
             case 3:
                 changePassword();
-                System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
-                scan.nextLine();
                 break;
             case 4:
                 viewPasswords();
-                System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
-                scan.nextLine();
                 break;
             case 5:
                 System.out.println(cf.ANSI_RED("Exiting..."));
@@ -74,6 +66,8 @@ public class ManagePasswords {
         if(low.passMap.containsKey(find)){
             String pass = encoder.decode(low.passMap.get(find));
             System.out.println(cf.ANSI_GREEN("The password for " + find + " is: " + pass));
+            System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
+            scan.nextLine();
         }
         else{
             System.out.println(cf.ANSI_RED("The password for '" + find + "' does not exist"));
@@ -100,6 +94,8 @@ public class ManagePasswords {
             low.passMap.remove(remove);
             System.out.println(cf.ANSI_GREEN("The password for " + remove + " has been removed"));
             low.saveToFile();
+            System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
+            scan.nextLine();
         }
            else{
             System.out.println(cf.ANSI_RED("The password for '" + remove + "' does not exist"));
@@ -123,6 +119,8 @@ public class ManagePasswords {
             low.passMap.put(change, encoder.encode(newPass));
             System.out.println(cf.ANSI_GREEN("The password for " + change + " has been changed"));
             low.saveToFile();
+            System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
+            scan.nextLine();
 
         }
         else{
@@ -132,12 +130,14 @@ public class ManagePasswords {
     }
 
     public static void viewPasswords(){
+        Scanner scan = new Scanner(System.in);
         System.out.println(cf.ANSI_CYAN("The passwords are:"));
         for(String key : low.passMap.keySet()){
             String pass =  encoder.decode(low.passMap.get(key));
-
             System.out.println(cf.ANSI_BOLD(key + ": " + pass));
         }
+        System.out.println(cf.ANSI_BOLD("Press enter to continue..."));
+        scan.nextLine();
     }
 
 }

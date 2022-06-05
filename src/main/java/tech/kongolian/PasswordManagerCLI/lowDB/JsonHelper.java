@@ -27,8 +27,7 @@ public class JsonHelper {
      * @return
      */
     private static final Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-    private static final Type MAP_Type = new TypeToken<Map<String, String>>() {
-    }.getType();
+    private static final Type MAP_Type = new TypeToken<Map<String, String>>() {}.getType();
 
     /**
      * converting from json to map
